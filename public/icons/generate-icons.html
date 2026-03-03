@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate PWA Icons</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0B1220 0%, #1E3A8A 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #E5E7EB 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    p {
+      color: #D1D5DB;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    
+    .preview {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    
+    .icon-preview {
+      text-align: center;
+    }
+    
+    .icon-preview canvas {
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      margin-bottom: 12px;
+    }
+    
+    .icon-preview label {
+      display: block;
+      font-size: 14px;
+      color: #9CA3AF;
+      font-weight: 600;
+    }
+    
+    button {
+      width: 100%;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4);
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(220, 38, 38, 0.6);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .success {
+      background: rgba(34, 197, 94, 0.2);
+      border: 2px solid #22C55E;
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 24px;
+      display: none;
+    }
+    
+    .success.show {
+      display: block;
+    }
+    
+    .success p {
+      margin: 0;
+      color: #86EFAC;
+    }
+    
+    .instructions {
+      background: rgba(59, 130, 246, 0.1);
+      border: 2px solid #3B82F6;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 24px;
+    }
+    
+    .instructions h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: #93C5FD;
+    }
+    
+    .instructions ol {
+      margin-left: 20px;
+      color: #D1D5DB;
+      line-height: 1.8;
+    }
+    
+    .instructions li {
+      margin-bottom: 8px;
+    }
+    
+    .instructions code {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      color: #FCA5A5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🇺🇸 USA Level English Icons</h1>
+    <p>Générateur automatique d'icônes PWA pour ton application</p>
+    
+    <div class="preview">
+      <div class="icon-preview">
+        <canvas id="canvas192" width="192" height="192"></canvas>
+        <label>192 × 192 px</label>
+      </div>
+      <div class="icon-preview">
+        <canvas id="canvas512" width="512" height="512"></canvas>
+        <label>512 × 512 px</label>
+      </div>
+    </div>
+    
+    <button onclick="downloadIcon('icon-192.png', 192)">📥 Télécharger icon-192.png</button>
+    <button onclick="downloadIcon('icon-512.png', 512)">📥 Télécharger icon-512.png</button>
+    <button onclick="downloadBoth()" style="background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);">
+      ⬇️ Télécharger les 2 icônes
+    </button>
+    
+    <div class="success" id="success">
+      <p>✅ <strong>Icônes téléchargées !</strong> Place-les dans <code>/public/icons/</code></p>
+    </div>
+    
+    <div class="instructions">
+      <h2>📋 Instructions après téléchargement</h2>
+      <ol>
+        <li>Les 2 fichiers PNG sont dans tes <strong>Téléchargements</strong></li>
+        <li>Place-les dans : <code>C:\Users\bienv\Documents\usa-level-english\public\icons\</code></li>
+        <li>Vérifie que tu as bien :
+          <ul style="margin-top: 8px;">
+            <li><code>icon-192.png</code> ✅</li>
+            <li><code>icon-512.png</code> ✅</li>
+          </ul>
+        </li>
+        <li>Ensuite : <code>git add .</code> → <code>git commit</code> → <code>git push</code></li>
+        <li>Déploie sur Vercel 🚀</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    // SVG Icon design
+    function drawIcon(ctx, size) {
+      const scale = size / 192;
+      
+      // Background
+      const gradient1 = ctx.createLinearGradient(0, 0, size, size);
+      gradient1.addColorStop(0, '#0B1220');
+      gradient1.addColorStop(1, '#1E3A8A');
+      
+      ctx.fillStyle = gradient1;
+      roundRect(ctx, 0, 0, size, size, 42 * scale);
+      ctx.fill();
+      
+      // Gradient overlay
+      const gradient2 = ctx.createLinearGradient(0, 0, size, size);
+      gradient2.addColorStop(0, 'rgba(30, 58, 138, 0.3)');
+      gradient2.addColorStop(1, 'rgba(220, 38, 38, 0.2)');
+      
+      ctx.fillStyle = gradient2;
+      roundRect(ctx, 0, 0, size, size, 42 * scale);
+      ctx.fill();
+      
+      // Draw star
+      ctx.save();
+      ctx.translate(size / 2, size * 0.25);
+      ctx.scale(scale, scale);
+      
+      const starGradient = ctx.createLinearGradient(0, -50, 0, 50);
+      starGradient.addColorStop(0, '#FFFFFF');
+      starGradient.addColorStop(1, '#E5E7EB');
+      
+      ctx.fillStyle = starGradient;
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2;
+      
+      drawStar(ctx, 0, 0, 5, 30, 15);
+      ctx.fill();
+      ctx.stroke();
+      
+      ctx.restore();
+      
+      // Red accent line
+      ctx.strokeStyle = '#DC2626';
+      ctx.lineWidth = 3 * scale;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(size * 0.21, size * 0.73);
+      ctx.lineTo(size * 0.79, size * 0.73);
+      ctx.stroke();
+      
+      // Text "USA"
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = `800 ${32 * scale}px system-ui, -apple-system, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.letterSpacing = '4px';
+      
+      const text = 'USA';
+      const x = size / 2;
+      const y = size * 0.82;
+      
+      // Add letter spacing manually
+      const chars = text.split('');
+      const charWidth = ctx.measureText('A').width;
+      const totalWidth = charWidth * chars.length + 4 * scale * (chars.length - 1);
+      let startX = x - totalWidth / 2;
+      
+      chars.forEach((char, i) => {
+        ctx.fillText(char, startX + i * (charWidth + 4 * scale) + charWidth / 2, y);
+      });
+    }
+    
+    function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius) {
+      let rot = Math.PI / 2 * 3;
+      let x = cx;
+      let y = cy;
+      const step = Math.PI / spikes;
+      
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - outerRadius);
+      
+      for (let i = 0; i < spikes; i++) {
+        x = cx + Math.cos(rot) * outerRadius;
+        y = cy + Math.sin(rot) * outerRadius;
+        ctx.lineTo(x, y);
+        rot += step;
+        
+        x = cx + Math.cos(rot) * innerRadius;
+        y = cy + Math.sin(rot) * innerRadius;
+        ctx.lineTo(x, y);
+        rot += step;
+      }
+      
+      ctx.lineTo(cx, cy - outerRadius);
+      ctx.closePath();
+    }
+    
+    function roundRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+    
+    // Generate previews on load
+    window.addEventListener('load', () => {
+      const canvas192 = document.getElementById('canvas192');
+      const ctx192 = canvas192.getContext('2d');
+      drawIcon(ctx192, 192);
+      
+      const canvas512 = document.getElementById('canvas512');
+      const ctx512 = canvas512.getContext('2d');
+      drawIcon(ctx512, 512);
+    });
+    
+    function downloadIcon(filename, size) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      
+      drawIcon(ctx, size);
+      
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        document.getElementById('success').classList.add('show');
+        setTimeout(() => {
+          document.getElementById('success').classList.remove('show');
+        }, 5000);
+      }, 'image/png');
+    }
+    
+    function downloadBoth() {
+      downloadIcon('icon-192.png', 192);
+      setTimeout(() => {
+        downloadIcon('icon-512.png', 512);
+      }, 500);
+    }
+  </script>
+</body>
+</html>

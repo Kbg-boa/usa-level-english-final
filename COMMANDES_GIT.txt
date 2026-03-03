@@ -1,0 +1,57 @@
+===========================================
+  COMMANDES À COPIER-COLLER (GIT BASH)
+===========================================
+
+ÉTAPE 1 : Initialiser Git
+--------------------------
+git init
+
+
+ÉTAPE 2 : Ajouter tous les fichiers
+------------------------------------
+git add .
+
+
+ÉTAPE 3 : Premier commit
+-------------------------
+git commit -m "Fix: Add React and Vercel config"
+
+
+ÉTAPE 4 : Créer le repo sur GitHub.com
+---------------------------------------
+1. Va sur github.com
+2. Clique le bouton "+" en haut à droite
+3. Clique "New repository"
+4. Nom : usa-level-english
+5. NE COCHE PAS "Initialize with README"
+6. Clique "Create repository"
+
+
+ÉTAPE 5 : Connecter au repo GitHub
+-----------------------------------
+git remote add origin https://github.com/Kbg-boa/usa-level-english.git
+
+
+ÉTAPE 6 : Renommer la branche en main
+--------------------------------------
+git branch -M main
+
+
+ÉTAPE 7 : Push le code
+-----------------------
+git push -u origin main
+
+
+===========================================
+  C'EST TERMINÉ !
+===========================================
+
+Maintenant va sur vercel.com et déploie !
+
+1. https://vercel.com
+2. Continue with GitHub
+3. Add New → Project
+4. Import ton repo usa-level-english
+5. Deploy
+
+===========================================

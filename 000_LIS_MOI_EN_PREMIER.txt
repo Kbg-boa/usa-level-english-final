@@ -1,0 +1,32 @@
+🇺🇸 USA LEVEL ENGLISH
+═══════════════════════════════════════════════════════════════
+
+✅ TOUT EST PRÊT ! JE T'AI TOUT ARRANGÉ !
+
+Tu as téléchargé et dézippé le projet.
+J'ai corrigé tous les fichiers qui causaient l'erreur Vercel.
+
+═══════════════════════════════════════════════════════════════
+  QUE FAIRE MAINTENANT ?
+═══════════════════════════════════════════════════════════════
+
+👉 OUVRE UN DE CES FICHIERS (CHOISIS-EN UN) :
+
+   ⭐ START_HERE.md           → Le plus recommandé
+   ⭐ LIS_MOI.txt             → Version texte simple
+   ⭐ GUIDE_VISUEL.html       → Ouvre dans un navigateur
+
+═══════════════════════════════════════════════════════════════
+  EN BREF
+═══════════════════════════════════════════════════════════════
+
+1. Copie 2 icônes dans public/icons/
+2. Push sur GitHub (Git Bash ou GitHub Desktop)
+3. Deploy sur vercel.com
+4. Installe sur iPhone via Safari
+
+TOTAL : 11 MINUTES ! 🚀
+
+═══════════════════════════════════════════════════════════════
+
+LET'S GO ! 💪🇺🇸

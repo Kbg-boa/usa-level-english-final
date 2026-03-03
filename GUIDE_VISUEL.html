@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USA Level English - Guide de Déploiement</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0B1220 0%, #1E3A8A 100%);
+      color: white;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+      font-size: 42px;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #E5E7EB 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      text-align: center;
+      color: #D1D5DB;
+      margin-bottom: 40px;
+      font-size: 18px;
+    }
+    
+    .status-box {
+      background: rgba(34, 197, 94, 0.2);
+      border: 2px solid #22C55E;
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    
+    .status-box h2 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: #86EFAC;
+    }
+    
+    .status-box p {
+      color: #D1D5DB;
+      font-size: 16px;
+    }
+    
+    .step {
+      background: rgba(59, 130, 246, 0.1);
+      border: 2px solid #3B82F6;
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .step-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .step-number {
+      background: #3B82F6;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 20px;
+      margin-right: 16px;
+    }
+    
+    .step h3 {
+      font-size: 22px;
+      color: #93C5FD;
+    }
+    
+    .step-content {
+      padding-left: 56px;
+      color: #E5E7EB;
+    }
+    
+    .step-content ol {
+      padding-left: 24px;
+      margin-top: 12px;
+    }
+    
+    .step-content li {
+      margin-bottom: 8px;
+    }
+    
+    .code-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid #374151;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 12px 0;
+      font-family: 'Courier New', monospace;
+      color: #86EFAC;
+      overflow-x: auto;
+    }
+    
+    .time-badge {
+      background: rgba(245, 158, 11, 0.2);
+      border: 2px solid #F59E0B;
+      color: #FCD34D;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 12px;
+    }
+    
+    .guides-section {
+      background: rgba(168, 85, 247, 0.1);
+      border: 2px solid #A855F7;
+      padding: 24px;
+      border-radius: 16px;
+      margin-top: 32px;
+    }
+    
+    .guides-section h2 {
+      color: #E9D5FF;
+      margin-bottom: 16px;
+      font-size: 24px;
+    }
+    
+    .guide-list {
+      display: grid;
+      gap: 12px;
+    }
+    
+    .guide-item {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #E5E7EB;
+    }
+    
+    .guide-item strong {
+      color: #C4B5FD;
+    }
+    
+    .summary {
+      background: rgba(239, 68, 68, 0.1);
+      border: 2px solid #EF4444;
+      padding: 24px;
+      border-radius: 16px;
+      margin-top: 32px;
+      text-align: center;
+    }
+    
+    .summary h2 {
+      color: #FCA5A5;
+      margin-bottom: 16px;
+      font-size: 28px;
+    }
+    
+    .summary .timeline {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .timeline-item {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 12px 20px;
+      border-radius: 12px;
+    }
+    
+    .timeline-item .label {
+      color: #9CA3AF;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    
+    .timeline-item .time {
+      color: #FCD34D;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    
+    .cta-button {
+      background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 16px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 32px;
+      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.4);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(34, 197, 94, 0.6);
+    }
+    
+    .fixes-list {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 16px;
+    }
+    
+    .fixes-list li {
+      color: #86EFAC;
+      margin-bottom: 8px;
+      list-style: none;
+    }
+    
+    .fixes-list li::before {
+      content: "✅ ";
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🇺🇸 USA LEVEL ENGLISH</h1>
+    <p class="subtitle">Guide de Déploiement - Tout est arrangé !</p>
+    
+    <div class="status-box">
+      <h2>✅ TOUT EST ARRANGÉ ET PRÊT !</h2>
+      <p>J'ai corrigé tous les fichiers de configuration. Ton déploiement va maintenant marcher !</p>
+      <div class="fixes-list">
+        <li>package.json → React ajouté + scripts corrigés</li>
+        <li>vercel.json → Configuration Vercel créée</li>
+        <li>.npmrc → Config NPM créée</li>
+        <li>.gitignore → Créé pour Git</li>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-header">
+        <div class="step-number">1</div>
+        <h3>Ajoute tes icônes</h3>
+        <span class="time-badge">2 min</span>
+      </div>
+      <div class="step-content">
+        <ol>
+          <li>Va dans le dossier : <code>public/icons/</code></li>
+          <li>Copie tes 2 images de logo</li>
+          <li>Renomme-les :
+            <div class="code-box">
+              Grande image → icon-512.png<br>
+              Moyenne image → icon-192.png
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-header">
+        <div class="step-number">2</div>
+        <h3>Push sur GitHub</h3>
+        <span class="time-badge">5 min</span>
+      </div>
+      <div class="step-content">
+        <p><strong>Option A : Git Bash</strong></p>
+        <div class="code-box">
+          git init<br>
+          git add .<br>
+          git commit -m "Fix: Add React and Vercel config"<br>
+          git remote add origin https://github.com/Kbg-boa/usa-level-english.git<br>
+          git branch -M main<br>
+          git push -u origin main
+        </div>
+        <p><strong>Option B : GitHub Desktop (plus simple)</strong></p>
+        <ol>
+          <li>Télécharge : <a href="https://desktop.github.com/" style="color: #93C5FD;">https://desktop.github.com/</a></li>
+          <li>Installe et connecte-toi</li>
+          <li>File → Add Local Repository</li>
+          <li>Sélectionne le dossier</li>
+          <li>Publish repository</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-header">
+        <div class="step-number">3</div>
+        <h3>Déploie sur Vercel</h3>
+        <span class="time-badge">3 min</span>
+      </div>
+      <div class="step-content">
+        <ol>
+          <li>Va sur : <a href="https://vercel.com" style="color: #93C5FD;">https://vercel.com</a></li>
+          <li>Clique "Continue with GitHub"</li>
+          <li>Connecte-toi</li>
+          <li>Clique "Add New..." → "Project"</li>
+          <li>Clique "Import" à côté de ton repo</li>
+          <li>Laisse tout par défaut</li>
+          <li>Clique "Deploy"</li>
+          <li>Attends 2-3 minutes...</li>
+          <li>🎉 URL prête : <code>https://usa-level-english.vercel.app</code></li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-header">
+        <div class="step-number">4</div>
+        <h3>Installe sur iPhone</h3>
+        <span class="time-badge">1 min</span>
+      </div>
+      <div class="step-content">
+        <ol>
+          <li>Ouvre <strong>Safari</strong> (pas Chrome !)</li>
+          <li>Va sur l'URL Vercel</li>
+          <li>Clique "Partager" (bouton avec flèche)</li>
+          <li>Clique "Sur l'écran d'accueil"</li>
+          <li>Clique "Ajouter"</li>
+          <li>🎉 L'icône US apparaît !</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="summary">
+      <h2>📊 Résumé</h2>
+      <p style="color: #E5E7EB; margin-bottom: 16px;">
+        Après avoir suivi ces 4 étapes, ton app sera en ligne et installable sur iPhone !
+      </p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="label">Icônes</div>
+          <div class="time">2 min</div>
+        </div>
+        <div class="timeline-item">
+          <div class="label">GitHub</div>
+          <div class="time">5 min</div>
+        </div>
+        <div class="timeline-item">
+          <div class="label">Vercel</div>
+          <div class="time">3 min</div>
+        </div>
+        <div class="timeline-item">
+          <div class="label">iPhone</div>
+          <div class="time">1 min</div>
+        </div>
+      </div>
+      <div style="margin-top: 20px; font-size: 32px; font-weight: bold; color: #FCD34D;">
+        TOTAL : 11 MINUTES ! 🚀
+      </div>
+    </div>
+    
+    <div class="guides-section">
+      <h2>📚 Guides Disponibles</h2>
+      <div class="guide-list">
+        <div class="guide-item">
+          <strong>START_HERE.md</strong> → Guide principal (4 étapes simples)
+        </div>
+        <div class="guide-item">
+          <strong>GUIDE_SIMPLE_POUR_TOI.md</strong> → Guide détaillé complet
+        </div>
+        <div class="guide-item">
+          <strong>CHECKLIST.md</strong> → Cases à cocher pour suivre ta progression
+        </div>
+        <div class="guide-item">
+          <strong>COMMANDES_GIT.txt</strong> → Toutes les commandes Git à copier-coller
+        </div>
+        <div class="guide-item">
+          <strong>TOUT_EST_ARRANGE.md</strong> → Ce qui a été corrigé
+        </div>
+        <div class="guide-item">
+          <strong>COMMENCE_ICI.txt</strong> → Guide texte visuel
+        </div>
+        <div class="guide-item">
+          <strong>README_FR.md</strong> → Documentation complète en français
+        </div>
+      </div>
+    </div>
+    
+    <div class="cta-button">
+      🚀 COMMENCE MAINTENANT ! OUVRE START_HERE.MD
+    </div>
+  </div>
+</body>
+</html>

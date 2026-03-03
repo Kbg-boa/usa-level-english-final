@@ -1,0 +1,36 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="192" height="192" rx="42" fill="#0B1220"/>
+  
+  <!-- Gradient overlay -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E3A8A;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#DC2626;stop-opacity:0.2" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E5E7EB;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="192" height="192" rx="42" fill="url(#grad1)"/>
+  
+  <!-- Star shape (American symbol) -->
+  <path d="M96 40L104.5 72H138L111 91L119.5 123L96 104L72.5 123L81 91L54 72H87.5L96 40Z" 
+        fill="url(#grad2)" 
+        stroke="#FFFFFF" 
+        stroke-width="2"/>
+  
+  <!-- Text "USA" -->
+  <text x="96" y="158" 
+        font-family="system-ui, -apple-system, sans-serif" 
+        font-size="32" 
+        font-weight="800" 
+        fill="#FFFFFF" 
+        text-anchor="middle" 
+        letter-spacing="4">USA</text>
+  
+  <!-- Subtle accent line -->
+  <line x1="40" y1="140" x2="152" y2="140" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+</svg>

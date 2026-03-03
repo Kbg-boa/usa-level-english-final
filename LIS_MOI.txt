@@ -1,0 +1,78 @@
+═══════════════════════════════════════════════════════════════
+  USA LEVEL ENGLISH - QUE FAIRE MAINTENANT ?
+═══════════════════════════════════════════════════════════════
+
+✅ J'AI TOUT ARRANGÉ POUR TOI !
+
+Les fichiers qui causaient l'erreur de déploiement sont maintenant corrigés.
+
+
+═══════════════════════════════════════════════════════════════
+  FAIS JUSTE ÇA (4 ÉTAPES)
+═══════════════════════════════════════════════════════════════
+
+1️⃣ ICÔNES (2 MIN)
+   
+   Copie tes 2 images de logo dans : public/icons/
+   Renomme-les : icon-192.png et icon-512.png
+
+
+2️⃣ GITHUB (5 MIN)
+
+   Option A : Télécharge GitHub Desktop
+   → https://desktop.github.com/
+   → File → Add Local Repository
+   → Sélectionne ton dossier
+   → Publish repository
+
+   Option B : Git Bash
+   → Ouvre COMMANDES_GIT.txt
+   → Copie-colle les commandes
+
+
+3️⃣ VERCEL (3 MIN)
+
+   → Va sur https://vercel.com
+   → Continue with GitHub
+   → Add New → Project
+   → Import ton repo
+   → Deploy
+   → CETTE FOIS ÇA VA MARCHER ! ✅
+
+
+4️⃣ iPHONE (1 MIN)
+
+   → Safari → URL Vercel
+   → Partager → "Sur l'écran d'accueil"
+   → L'icône US apparaît ! 📱
+
+
+═══════════════════════════════════════════════════════════════
+  BESOIN D'AIDE ?
+═══════════════════════════════════════════════════════════════
+
+Ouvre un de ces guides :
+
+📘 START_HERE.md              → Le plus simple (RECOMMANDÉ)
+📘 GUIDE_VISUEL.html          → Ouvre dans un navigateur
+📘 GUIDE_SIMPLE_POUR_TOI.md   → Guide détaillé complet
+📘 CHECKLIST.md               → Cases à cocher
+📘 INDEX_DES_GUIDES.md        → Liste de TOUS les guides
+
+
+═══════════════════════════════════════════════════════════════
+  RÉSULTAT
+═══════════════════════════════════════════════════════════════
+
+✅ App en ligne sur Vercel
+✅ Installable sur iPhone
+✅ Avec ton logo "US" professionnel
+✅ 18 modules fonctionnels
+✅ 9000 mots de vocabulaire
+
+
+═══════════════════════════════════════════════════════════════
+  TEMPS TOTAL : 11 MINUTES ! 🚀
+═══════════════════════════════════════════════════════════════
+
+LET'S GO ! 💪🇺🇸

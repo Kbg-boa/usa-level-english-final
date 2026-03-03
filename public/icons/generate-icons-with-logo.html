@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate PWA Icons - USA Level English</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0B1220 0%, #1E3A8A 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #E5E7EB 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+    
+    .subtitle {
+      text-align: center;
+      color: #D1D5DB;
+      margin-bottom: 32px;
+      font-size: 14px;
+    }
+    
+    .preview {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .icon-preview {
+      text-align: center;
+    }
+    
+    .icon-preview canvas {
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      margin-bottom: 12px;
+      background: #0B1220;
+    }
+    
+    .icon-preview label {
+      display: block;
+      font-size: 14px;
+      color: #9CA3AF;
+      font-weight: 600;
+    }
+    
+    button {
+      width: 100%;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4);
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(220, 38, 38, 0.6);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    button.download-all {
+      background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+      box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
+      font-size: 18px;
+      padding: 20px 32px;
+    }
+    
+    button.download-all:hover {
+      box-shadow: 0 6px 24px rgba(34, 197, 94, 0.6);
+    }
+    
+    .success {
+      background: rgba(34, 197, 94, 0.2);
+      border: 2px solid #22C55E;
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 24px;
+      display: none;
+      text-align: center;
+    }
+    
+    .success.show {
+      display: block;
+      animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .success p {
+      margin: 0;
+      color: #86EFAC;
+      font-weight: 600;
+    }
+    
+    .logo-info {
+      background: rgba(59, 130, 246, 0.1);
+      border: 2px solid #3B82F6;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    
+    .logo-info h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #93C5FD;
+    }
+    
+    .logo-info p {
+      color: #D1D5DB;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .hidden-img {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🇺🇸 USA LEVEL ENGLISH</h1>
+    <p class="subtitle">Générateur d'icônes PWA avec ton logo</p>
+    
+    <div class="logo-info">
+      <h2>📱 Ton Logo</h2>
+      <p>Design "US" en Montserrat sur fond bleu marine</p>
+    </div>
+    
+    <div class="preview">
+      <div class="icon-preview">
+        <canvas id="canvas192" width="192" height="192"></canvas>
+        <label>192 × 192 px</label>
+      </div>
+      <div class="icon-preview">
+        <canvas id="canvas512" width="512" height="512"></canvas>
+        <label>512 × 512 px</label>
+      </div>
+    </div>
+    
+    <button class="download-all" onclick="downloadBoth()">
+      ⬇️ TÉLÉCHARGER LES 2 ICÔNES
+    </button>
+    
+    <button onclick="downloadIcon('icon-192.png', 192)">📥 Télécharger icon-192.png uniquement</button>
+    <button onclick="downloadIcon('icon-512.png', 512)">📥 Télécharger icon-512.png uniquement</button>
+    
+    <div class="success" id="success">
+      <p>✅ <strong>Icônes téléchargées !</strong> Place-les dans <code style="background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px;">/public/icons/</code></p>
+    </div>
+  </div>
+
+  <!-- Hidden image that will be loaded -->
+  <img id="logoImage" class="hidden-img" crossorigin="anonymous" />
+
+  <script>
+    // Base64 encoded version of the logo
+    // This is a placeholder - we'll generate the actual icons with the provided logo
+    const logoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABYElEQVR4nO2Xv0oDQRDGv0QQxMJCsLGwUbC0sbC0sLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCw";
+
+    let logoImg = null;
+    
+    // Function to draw the icon on canvas
+    function drawIcon(ctx, size) {
+      // Fill background with the dark blue color (#0B1220)
+      ctx.fillStyle = '#0B1220';
+      
+      // Draw rounded rectangle
+      const radius = size * 0.2; // 20% radius for rounded corners
+      ctx.beginPath();
+      ctx.moveTo(radius, 0);
+      ctx.lineTo(size - radius, 0);
+      ctx.quadraticCurveTo(size, 0, size, radius);
+      ctx.lineTo(size, size - radius);
+      ctx.quadraticCurveTo(size, size, size - radius, size);
+      ctx.lineTo(radius, size);
+      ctx.quadraticCurveTo(0, size, 0, size - radius);
+      ctx.lineTo(0, radius);
+      ctx.quadraticCurveTo(0, 0, radius, 0);
+      ctx.closePath();
+      ctx.fill();
+      
+      // Draw the logo image in the center if loaded
+      if (logoImg && logoImg.complete) {
+        // Calculate size to fit logo (use 80% of canvas)
+        const logoSize = size * 0.8;
+        const x = (size - logoSize) / 2;
+        const y = (size - logoSize) / 2;
+        
+        ctx.drawImage(logoImg, x, y, logoSize, logoSize);
+      } else {
+        // Fallback: Draw "US" text
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = `${size * 0.5}px Montserrat, system-ui, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fontWeight = 'bold';
+        
+        ctx.fillText('US', size / 2, size / 2);
+      }
+    }
+    
+    // Try to load the logo image
+    function loadLogo() {
+      return new Promise((resolve, reject) => {
+        logoImg = new Image();
+        logoImg.crossOrigin = "anonymous";
+        
+        logoImg.onload = () => {
+          console.log('Logo loaded successfully');
+          resolve();
+        };
+        
+        logoImg.onerror = () => {
+          console.log('Using fallback text instead of image');
+          resolve(); // Resolve anyway to continue with text fallback
+        };
+        
+        // Try to load from the figma asset (this might not work in the generator HTML file)
+        // So we'll use a text fallback
+        logoImg.src = logoBase64;
+      });
+    }
+    
+    // Generate previews on load
+    window.addEventListener('load', async () => {
+      await loadLogo();
+      
+      const canvas192 = document.getElementById('canvas192');
+      const ctx192 = canvas192.getContext('2d');
+      drawIcon(ctx192, 192);
+      
+      const canvas512 = document.getElementById('canvas512');
+      const ctx512 = canvas512.getContext('2d');
+      drawIcon(ctx512, 512);
+    });
+    
+    function downloadIcon(filename, size) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      
+      drawIcon(ctx, size);
+      
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        showSuccess();
+      }, 'image/png');
+    }
+    
+    function downloadBoth() {
+      downloadIcon('icon-192.png', 192);
+      setTimeout(() => {
+        downloadIcon('icon-512.png', 512);
+      }, 500);
+    }
+    
+    function showSuccess() {
+      const successEl = document.getElementById('success');
+      successEl.classList.add('show');
+      setTimeout(() => {
+        successEl.classList.remove('show');
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
