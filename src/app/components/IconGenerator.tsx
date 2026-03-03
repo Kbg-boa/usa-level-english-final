@@ -1,36 +1,40 @@
 import { useEffect, useRef, useState } from 'react';
-import logoSmall from 'figma:asset/a0282822fb1d96d6f9b6bd723bed5cd99c045d26.png';
-import logoMedium from 'figma:asset/f4f8e8a2ebbe03be05c8d528b0f87c4cb97367e0.png';
-import logoLarge from 'figma:asset/934f64bbff89b4bd60ec73d4e521f47c81f2fb75.png';
 
 export default function IconGenerator() {
   const canvas192Ref = useRef<HTMLCanvasElement>(null);
   const canvas512Ref = useRef<HTMLCanvasElement>(null);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  useEffect(() => {
-    const img = new Image();
-    img.src = logoLarge;
+  // Generate logo on canvas directly
+  const generateLogo = (canvas: HTMLCanvasElement) => {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const size = canvas.width;
     
-    img.onload = () => {
-      // Generate 192x192 icon
-      if (canvas192Ref.current) {
-        const ctx = canvas192Ref.current.getContext('2d');
-        if (ctx) {
-          ctx.clearRect(0, 0, 192, 192);
-          ctx.drawImage(img, 0, 0, 192, 192);
-        }
-      }
-      
-      // Generate 512x512 icon
-      if (canvas512Ref.current) {
-        const ctx = canvas512Ref.current.getContext('2d');
-        if (ctx) {
-          ctx.clearRect(0, 0, 512, 512);
-          ctx.drawImage(img, 0, 0, 512, 512);
-        }
-      }
-    };
+    // Background - Navy blue gradient
+    const gradient = ctx.createLinearGradient(0, 0, size, size);
+    gradient.addColorStop(0, '#0B1220');
+    gradient.addColorStop(1, '#1E3A8A');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, size, size);
+    
+    // Draw "US" text
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = `bold ${size * 0.35}px Montserrat, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('US', size / 2, size / 2);
+  };
+
+  useEffect(() => {
+    // Generate icons when component mounts
+    if (canvas192Ref.current) {
+      generateLogo(canvas192Ref.current);
+    }
+    if (canvas512Ref.current) {
+      generateLogo(canvas512Ref.current);
+    }
   }, []);
 
   const downloadIcon = (size: 192 | 512) => {
@@ -129,11 +133,6 @@ export default function IconGenerator() {
             </p>
           </div>
         )}
-
-        {/* Hidden images for preloading */}
-        <img src={logoSmall} alt="" className="hidden" />
-        <img src={logoMedium} alt="" className="hidden" />
-        <img src={logoLarge} alt="" className="hidden" />
       </div>
     </div>
   );
