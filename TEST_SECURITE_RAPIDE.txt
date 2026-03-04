@@ -1,0 +1,187 @@
+=============================================================
+🔒 TESTER LA SÉCURITÉ EN 2 MINUTES
+=============================================================
+
+MÉTHODE 1: SCRIPT AUTOMATIQUE (RECOMMANDÉ)
+-------------------------------------------------------------
+
+Linux/Mac:
+  chmod +x scripts/test-security.sh
+  ./scripts/test-security.sh https://ton-site.vercel.app
+
+Windows:
+  scripts\test-security.bat https://ton-site.vercel.app
+
+Résultat:
+  Score: XX / 90 points
+  → 40-50 points = Niveau 1 (actuel)
+  → 70+ points = Niveau 2 (Cloudflare)
+  → 90+ points = Niveau 3 (Supabase)
+
+=============================================================
+MÉTHODE 2: TEST MANUEL (2 MIN)
+=============================================================
+
+1. VA SUR TON SITE
+-------------------------------------------------------------
+https://ton-site.vercel.app
+
+
+2. OUVRE DEVTOOLS (F12)
+-------------------------------------------------------------
+Windows: F12
+Mac: Cmd+Option+I
+
+
+3. NETWORK → REFRESH PAGE
+-------------------------------------------------------------
+- Clic sur première requête (ton site)
+- Onglet "Headers"
+- Scroll → "Response Headers"
+
+
+4. VÉRIFIE CES HEADERS ✅
+-------------------------------------------------------------
+Tu DOIS voir:
+
+✅ content-security-policy: default-src 'self'...
+✅ strict-transport-security: max-age=31536000...
+✅ x-frame-options: DENY
+✅ x-content-type-options: nosniff
+✅ x-xss-protection: 1; mode=block
+
+Si tu vois TOUS ces headers → Niveau 1 actif ! ✅
+
+
+5. TEST BONUS: DONNÉES PROTÉGÉES
+-------------------------------------------------------------
+DevTools → Sources (ou Debugger)
+  → Cherche fichier avec "vocabulary"
+  → Regarde le contenu
+
+Tu vois:
+  ❌ export const vocabularyDatabase = { ... 9000 mots }
+  → Données STATIQUES (normal pour maintenant)
+
+Après Supabase, tu verras:
+  ✅ export async function getVocabulary() { ... }
+  → Données PROTÉGÉES (backend)
+
+
+6. TEST ONLINE (OPTIONNEL)
+-------------------------------------------------------------
+https://securityheaders.com
+
+  1. Entre ton URL
+  2. Clic "Scan"
+  3. Regarde le grade
+
+Tu devrais avoir:
+  🟢 Grade A ou B (40-50/100)
+
+=============================================================
+INTERPRÉTATION RÉSULTATS
+=============================================================
+
+Headers présents + Grade A/B:
+  ✅ Niveau 1 actif (40/100)
+  → Headers sécurité OK
+  → Build Vercel OK
+  → Protection basique active
+
+  Amélioration:
+  → Cloudflare (+30 points)
+  → Supabase (+20 points)
+
+-------------------------------------------------------------
+
+Headers absents ou Grade F:
+  ❌ Problème configuration
+  
+  Actions:
+  1. Vérifier vercel.json existe
+  2. Redéployer: git push
+  3. Vider cache navigateur
+  4. Retester en navigation privée
+
+-------------------------------------------------------------
+
+Cloudflare détecté (header "cf-ray"):
+  ✅ Niveau 2 actif (70/100)
+  → Protection bots OK
+  → Rate limiting OK
+  
+  Amélioration:
+  → Supabase (+20 points)
+
+-------------------------------------------------------------
+
+Données dans backend (pas de vocabularyDatabase):
+  ✅ Niveau 3 actif (95/100)
+  → Sécurité maximale
+  → Anti-scraping actif
+  
+  Bravo ! 🎉
+
+=============================================================
+SCORES TYPIQUES
+=============================================================
+
+Juste après push (maintenant):
+  Score: 40-50/100
+  Niveau: 1 (Headers sécurité)
+  Action: OK, fonctionne bien
+
+Après Cloudflare:
+  Score: 70-75/100
+  Niveau: 2 (Protection bots)
+  Action: Très bien, safe
+
+Après Supabase:
+  Score: 90-95/100
+  Niveau: 3 (Backend sécurisé)
+  Action: Excellent, production-grade
+
+=============================================================
+COMMANDES RAPIDES
+=============================================================
+
+Test automatique:
+  ./scripts/test-security.sh https://ton-site.vercel.app
+
+Test online:
+  https://securityheaders.com → Entre ton URL
+
+Vérifier headers (terminal):
+  curl -I https://ton-site.vercel.app | grep -i "security\|frame\|xss"
+
+=============================================================
+GUIDE COMPLET
+=============================================================
+
+Tous les tests détaillés:
+  cat COMMENT_VERIFIER_SECURITE.md
+
+Setup Supabase (95/100):
+  cat SUPABASE_SETUP_GUIDE.md
+
+=============================================================
+TL;DR - ACTION IMMÉDIATE
+=============================================================
+
+1. Va sur: https://ton-site.vercel.app
+2. F12 → Network → Refresh
+3. Clic première requête → Headers
+4. Vérifie "content-security-policy" présent
+
+✅ Présent = Niveau 1 actif (40/100) = OK ! 🎉
+❌ Absent = Problème config = Redéployer
+
+Score actuel attendu: 40-50/100
+C'est normal et acceptable pour démarrer.
+
+Pour améliorer:
+  → Lire COMMENT_VERIFIER_SECURITE.md
+  → Setup Supabase (1h) = 95/100
+
+=============================================================

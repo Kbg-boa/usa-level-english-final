@@ -27,6 +27,16 @@ import BehaviorSystem from "./components/BehaviorSystem";
 import PronunciationLab from "./components/PronunciationLab";
 import IconGenerator from "./components/IconGenerator";
 
+// Admin imports
+import { AdminLogin } from "./admin/Login";
+import { AdminLayout } from "./admin/AdminLayout";
+import { Dashboard as AdminDashboard } from "./admin/Dashboard";
+import { Users } from "./admin/Users";
+import { Analytics } from "./admin/Analytics";
+import { Security } from "./admin/Security";
+import { Messages } from "./admin/Messages";
+import { Content } from "./admin/Content";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -62,5 +72,23 @@ export const router = createBrowserRouter([
   {
     path: "/icon-generator",
     Component: IconGenerator,
+  },
+  // Admin routes
+  {
+    path: "/admin/login",
+    Component: AdminLogin,
+  },
+  {
+    path: "/admin",
+    Component: AdminLayout,
+    children: [
+      { index: true, Component: AdminDashboard },
+      { path: "dashboard", Component: AdminDashboard },
+      { path: "users", Component: Users },
+      { path: "analytics", Component: Analytics },
+      { path: "security", Component: Security },
+      { path: "messages", Component: Messages },
+      { path: "content", Component: Content },
+    ],
   },
 ]);

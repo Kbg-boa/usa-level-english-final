@@ -1,0 +1,149 @@
+/* ===================================================================
+   ADMIN PANEL - Routes Integration Example
+   
+   Copier ce code dans votre fichier src/app/routes.ts
+   =================================================================== */
+
+import { createBrowserRouter } from "react-router";
+
+// Vos imports existants
+import Root from "./components/Root";
+import Dashboard from "./components/Dashboard";
+// ... autres imports ...
+
+// ============================================
+// ✅ AJOUTER CES IMPORTS ADMIN
+// ============================================
+import { AdminLogin } from "./admin/Login";
+import { AdminLayout } from "./admin/AdminLayout";
+import { Dashboard as AdminDashboard } from "./admin/Dashboard";
+import { Users } from "./admin/Users";
+import { Analytics } from "./admin/Analytics";
+import { Security } from "./admin/Security";
+import { Messages } from "./admin/Messages";
+import { Content } from "./admin/Content";
+
+export const router = createBrowserRouter([
+  // ============================================
+  // VOS ROUTES EXISTANTES
+  // ============================================
+  {
+    path: "/",
+    Component: Root,
+    children: [
+      { index: true, Component: Dashboard },
+      // ... vos autres routes ...
+    ],
+  },
+  
+  // ============================================
+  // ✅ AJOUTER CES ROUTES ADMIN
+  // ============================================
+  
+  // Login page (pas de layout)
+  {
+    path: "/admin/login",
+    Component: AdminLogin,
+  },
+  
+  // Admin pages (avec layout + sidebar)
+  {
+    path: "/admin",
+    Component: AdminLayout,
+    children: [
+      // Redirect /admin vers /admin/dashboard
+      { index: true, Component: AdminDashboard },
+      
+      // Pages admin
+      { path: "dashboard", Component: AdminDashboard },
+      { path: "users", Component: Users },
+      { path: "analytics", Component: Analytics },
+      { path: "security", Component: Security },
+      { path: "messages", Component: Messages },
+      { path: "content", Component: Content },
+    ],
+  },
+]);
+
+/* ===================================================================
+   EXEMPLE COMPLET AVEC ROUTES EXISTANTES
+   =================================================================== */
+
+/*
+import { createBrowserRouter } from "react-router";
+import Root from "./components/Root";
+import Dashboard from "./components/Dashboard";
+import FluencyHub from "./components/FluencyHub";
+import Settings from "./components/Settings";
+
+// Admin imports
+import { AdminLogin } from "./admin/Login";
+import { AdminLayout } from "./admin/AdminLayout";
+import { Dashboard as AdminDashboard } from "./admin/Dashboard";
+import { Users } from "./admin/Users";
+import { Analytics } from "./admin/Analytics";
+import { Security } from "./admin/Security";
+import { Messages } from "./admin/Messages";
+import { Content } from "./admin/Content";
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: Root,
+    children: [
+      { index: true, Component: Dashboard },
+      { path: "fluency", Component: FluencyHub },
+      { path: "settings", Component: Settings },
+    ],
+  },
+  {
+    path: "/admin/login",
+    Component: AdminLogin,
+  },
+  {
+    path: "/admin",
+    Component: AdminLayout,
+    children: [
+      { index: true, Component: AdminDashboard },
+      { path: "dashboard", Component: AdminDashboard },
+      { path: "users", Component: Users },
+      { path: "analytics", Component: Analytics },
+      { path: "security", Component: Security },
+      { path: "messages", Component: Messages },
+      { path: "content", Component: Content },
+    ],
+  },
+]);
+*/
+
+/* ===================================================================
+   URLS DISPONIBLES APRÈS INTÉGRATION
+   =================================================================== */
+
+/*
+http://localhost:5173/admin/login      → Page login
+http://localhost:5173/admin            → Redirect vers /admin/dashboard
+http://localhost:5173/admin/dashboard  → Dashboard stats
+http://localhost:5173/admin/users      → User management
+http://localhost:5173/admin/analytics  → Charts analytics
+http://localhost:5173/admin/security   → Security logs
+http://localhost:5173/admin/messages   → Messaging system
+http://localhost:5173/admin/content    → Content management
+*/
+
+/* ===================================================================
+   NOTES
+   =================================================================== */
+
+/*
+1. L'import "Dashboard as AdminDashboard" évite les conflits 
+   avec votre Dashboard existant
+
+2. La route "index: true" fait que /admin redirige automatiquement 
+   vers /admin/dashboard
+
+3. AdminLayout contient le sidebar, donc toutes les pages enfants 
+   l'auront automatiquement
+
+4. AdminLogin n'a pas de layout (full screen)
+*/

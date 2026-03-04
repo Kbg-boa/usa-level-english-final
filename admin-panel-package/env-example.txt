@@ -1,0 +1,122 @@
+# ===================================================================
+# ADMIN PANEL - Environment Variables Example
+# 
+# Copier ce fichier en .env à la racine de votre projet
+# Remplacer les valeurs par vos credentials Supabase
+# ===================================================================
+
+# ===================================================================
+# SUPABASE CONFIGURATION
+# ===================================================================
+
+# Project ID (visible dans l'URL de votre projet Supabase)
+# Exemple: https://xxxxx.supabase.co → xxxxx est votre PROJECT_ID
+VITE_SUPABASE_PROJECT_ID=xxxxx
+
+# Anon/Public Key (Dashboard → Settings → API)
+# C'est la clé "anon" ou "public" (longue string commençant par eyJ...)
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+
+# ===================================================================
+# INSTRUCTIONS
+# ===================================================================
+
+# 1. Créer projet Supabase: https://supabase.com
+# 2. Récupérer credentials: Dashboard → Settings → API
+# 3. Copier ce fichier en .env
+# 4. Remplacer xxxxx et eyJ... par vos vraies valeurs
+# 5. Ajouter .env au .gitignore (important!)
+# 6. Redémarrer dev server: npm run dev
+
+
+# ===================================================================
+# OÙ TROUVER VOS CREDENTIALS ?
+# ===================================================================
+
+# 1. Aller sur https://supabase.com/dashboard
+# 2. Sélectionner votre projet
+# 3. Settings (icône engrenage) → API
+# 4. Vous verrez:
+#    - Project URL: https://xxxxx.supabase.co
+#    - Project API keys:
+#      - anon public: eyJhbGci... (COPIER CELUI-CI)
+#      - service_role: eyJhbGci... (NE PAS UTILISER DANS LE FRONTEND!)
+
+
+# ===================================================================
+# MODE DEV vs PRODUCTION
+# ===================================================================
+
+# MODE DEV (sans .env ou variables vides):
+# → Admin panel fonctionne en mode MOCK
+# → Login avec n'importe quel email/password
+# → Mock data pour toutes les pages
+# → Aucun backend requis
+# → Parfait pour tester l'UI !
+
+# MODE PRODUCTION (avec .env configuré):
+# → Admin panel utilise Supabase Auth
+# → Login avec vraies credentials
+# → Données réelles depuis database
+# → Role verification (admin, super_admin)
+# → Backend complet fonctionnel
+
+
+# ===================================================================
+# DÉPLOIEMENT VERCEL
+# ===================================================================
+
+# Local (.env):
+# Ajouter ce fichier .env à la racine
+
+# Vercel (Environment Variables):
+# Dashboard → Settings → Environment Variables
+# Ajouter:
+#   - VITE_SUPABASE_PROJECT_ID
+#   - VITE_SUPABASE_ANON_KEY
+# Pour tous les environnements (Production, Preview, Development)
+
+
+# ===================================================================
+# SÉCURITÉ
+# ===================================================================
+
+# ⚠️ IMPORTANT:
+# - NE JAMAIS commit le fichier .env sur GitHub
+# - Ajouter .env au .gitignore
+# - Utiliser SEULEMENT la clé "anon" (pas service_role)
+# - La clé anon est safe dans le frontend (RLS protège les données)
+
+
+# ===================================================================
+# GITIGNORE
+# ===================================================================
+
+# Ajouter à votre .gitignore:
+# .env
+# .env.local
+# .env.production
+
+
+# ===================================================================
+# VÉRIFICATION
+# ===================================================================
+
+# Tester que les variables sont chargées:
+# console.log(import.meta.env.VITE_SUPABASE_PROJECT_ID)
+
+# Si undefined → .env pas chargé
+# Si xxxxx → valeur correcte chargée
+
+
+# ===================================================================
+# EXEMPLE COMPLET
+# ===================================================================
+
+# Voici un exemple avec de fausses valeurs:
+
+# VITE_SUPABASE_PROJECT_ID=abcdefghijklmnop
+# VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiY2RlZmdoaWprbG1ub3AiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTYxNzg5NzAwMCwiZXhwIjoxOTMzNDczMDAwfQ.example_signature_here
+
+# Remplacer par vos vraies valeurs !

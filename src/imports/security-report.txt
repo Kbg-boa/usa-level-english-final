@@ -1,0 +1,57 @@
+Scannez votre site dès maintenant
+
+https://usa-level-english-final-hnks.vercel.app/
+ 
+ Masquer les résultats  Suivre les redirections
+Résumé du rapport de sécurité
+A
+Site :	https://usa-level-english-final-hnks.vercel.app/
+Adresse IP :	64.29.17.195
+Heure du rapport :	04 mars 2026 04:44:52 UTC
+En-têtes :	
+Contenu-Sécurité-Politique Politique des autorisations Politique de référence Stricte-Sécurité-Transport X-Type-Options X-Frame-Options
+Avertissement :	Note plafonnée à A, veuillez consulter les avertissements ci-dessous.
+Avancé :	
+Super note ! Effectuez une analyse de sécurité plus approfondie de votre site web et de vos API :	
+Avertissements
+Contenu-Sécurité-Politique	Cette politique contient le terme « unsafe-inline », ce qui est dangereux dans la directive script-src. Cette politique contient une « évaluation non sécuritaire », qui est dangereuse dans la directive script-src.
+En-têtes brutes
+HTTP/2	103
+serveur	Vercel
+x-vercel-id	vpLshljDH6VC8C8TxbdUSolwPXD4XEQi
+HTTP/2 200	
+contrôle-accès-permet-origine	*
+Âge	0
+Contrôle de cache	public, max-age=0, must-revalidation
+Disposition du contenu	en ligne
+Encodage de contenu	gzip
+politique de sécurité du contenu	par défaut-src « soi » ; script-src « soi », « in-in-safe-in », « unsafe-évaluation » ; style-src « soi » « dangereux-en ligne » https://fonts.googleapis.com ; font-src « soi » https://fonts.gstatic.com données : ; IMG-SRC données « self » : https : blob :; connect-src 'self' https ://*.supabase.co wss ://*.supabase.co ; Ancêtres-cadres « aucun(e) » ; Base-uri « soi » ; Forme d’action « soi » ;
+type de contenu	texte/html ; charset=utf-8
+Date	mer, 04 mars 2026 04:44:52 GMT
+etag	W/"c953c9910ced21d91b1061abdd28eaef »
+Dernière modification	mer, 04 mars 2026 04:44:52 GMT
+Politique des permissions	caméra=(), microphone=(), géolocalisation=()
+Politique de référence	origine-stricte-when-cross-origin
+serveur	Vercel
+Sécurité stricte des transports	âge maximum=63072000 ; inclue-Sous-Domaines ; Préchargement
+x-content-type-options	nosniff
+Options de frames x	NIER
+x-vercel-cache	HIT
+x-vercel-id	dub1 ::7z65x-1772599492127-8924038f145d
+X-XSS-PROTECTION	1 ; mode=bloc
+En-têtes à venir
+Politique d’origine croisée et d’intégration	La politique d’intégration cross-origin permet à un site d’empêcher le chargement d’actifs qui n’accordent pas la permission de les charger via CORS ou CORP.
+Politique d’ouverture croisée	La politique d’ouverture cross-origin permet à un site de choisir l’isolation cross-origin dans le navigateur.
+Politique d’origine croisée des ressources	La politique de ressources inter-origine permet à un propriétaire de ressource de spécifier qui peut charger la ressource.
+Informations complémentaires
+serveur	La valeur du serveur a été modifiée. En général, vous verrez des valeurs comme « Microsoft-IIS/8.0 » ou « nginx 1.7.2 ».
+contrôle-accès-permet-origine	C’est une politique CORS très laxiste. Une telle politique ne devrait être utilisée que sur un CDN public.
+politique de sécurité du contenu	La politique de sécurité du contenu est une mesure efficace pour protéger votre site contre les attaques XSS. En mettant sur liste blanche les sources du contenu approuvé, vous pouvez empêcher le navigateur de charger des actifs malveillants. Analysez cette politique plus en détail. Vous pouvez vous inscrire gratuitement sur Report URI pour collecter des rapports sur les problèmes sur votre site.
+Politique des permissions	La politique des permissions est un nouvel en-tête qui permet à un site de contrôler quelles fonctionnalités et API peuvent être utilisées dans le navigateur.
+Politique de référence	La politique de référent est un nouvel en-tête qui permet à un site de contrôler la quantité d’informations que le navigateur inclut en s’éloignant d’un document et doit être défini par tous les sites.
+serveur	La valeur du serveur a été modifiée. En général, vous verrez des valeurs comme « Microsoft-IIS/8.0 » ou « nginx 1.7.2 ».
+Sécurité stricte des transports	HTTP Strict Transport Security est une excellente fonctionnalité à supporter sur votre site et renforce votre implémentation de TLS en faisant appliquer l’utilisation de HTTPS par l’Agent utilisateur.
+x-content-type-options	X-Content-Type-Options empêche un navigateur d’essayer de détecter le type de contenu en MIME et le force à rester fidèle au type de contenu déclaré. La seule valeur valide pour cet en-tête est « X-Content-Type-Options : nosniff ».
+Options de frames x	X-Frame-Options indique au navigateur si vous souhaitez permettre que votre site soit encadré ou non. En empêchant un navigateur de cadrer votre site, vous pouvez vous défendre contre des attaques comme le clickjacking.
+X-XSS-PROTECTION	X-XSS-Protection définit la configuration de l’auditeur XSS intégré aux anciens navigateurs. La valeur recommandée était « X-XSS-Protection : 1 ; mode=block » mais vous devriez maintenant consulter la politique de sécurité du contenu.
+Un projet snyk.io - CC-BY-SA 4.0Propulsé par Snyk  

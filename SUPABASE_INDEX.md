@@ -9,8 +9,45 @@ Navigation rapide vers tous les guides de setup Supabase.
 | Besoin | Fichier | Temps |
 |--------|---------|-------|
 | **Push maintenant** | [`PUSH_NOW.md`](PUSH_NOW.md) | 2 min |
+| **Tester sécurité** | [`TEST_SECURITE_RAPIDE.txt`](TEST_SECURITE_RAPIDE.txt) | 2 min |
 | Vérifier avant push | [`verify-supabase-setup.sh`](verify-supabase-setup.sh) | 1 min |
 | Résumé changements | [`SUPABASE_FILES_SUMMARY.md`](SUPABASE_FILES_SUMMARY.md) | 3 min |
+
+---
+
+## 🔒 SÉCURITÉ
+
+### Vérifier que ça marche
+
+**📄 [`COMMENT_VERIFIER_SECURITE.md`](COMMENT_VERIFIER_SECURITE.md)** - Guide complet tests  
+**Temps:** 5-10 minutes  
+**Contenu:**
+- Tests Niveau 1 (Headers HTTP)
+- Tests Niveau 2 (Cloudflare)
+- Tests Niveau 3 (Supabase)
+- Outils en ligne (securityheaders.com, etc.)
+- Interprétation résultats
+- Calcul score sécurité
+
+**📄 [`TEST_SECURITE_RAPIDE.txt`](TEST_SECURITE_RAPIDE.txt)** - Version ultra-rapide  
+**Temps:** 2 minutes  
+**Méthodes:**
+- Script automatique (recommandé)
+- Test manuel DevTools
+- Test online securityheaders.com
+
+**🔧 Scripts automatiques:**
+- [`/scripts/test-security.sh`](scripts/test-security.sh) - Linux/Mac
+- [`/scripts/test-security.bat`](scripts/test-security.bat) - Windows
+
+**Usage:**
+```bash
+# Linux/Mac
+./scripts/test-security.sh https://ton-site.vercel.app
+
+# Windows
+scripts\test-security.bat https://ton-site.vercel.app
+```
 
 ---
 
