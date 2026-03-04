@@ -1,0 +1,45 @@
+# ✅ LISTE DES FICHIERS À COMMIT (16 NOUVEAUX + 1 MODIFIÉ)
+
+## CONFIGURATION (3 fichiers)
+/.gitignore                          ← Nouveau (ignore secrets)
+/vercel.json                         ← Nouveau (headers sécurité)
+/.env.example                        ← Nouveau (template env vars)
+
+## BACKEND SUPABASE (5 fichiers)
+/supabase/migrations/001_initial_schema.sql          ← Nouveau (schema SQL + RLS)
+/supabase/functions/vocab-get/index.ts               ← Nouveau (API vocabulaire)
+/supabase/functions/_shared/cors.ts                  ← Nouveau (CORS headers)
+/supabase/functions/_shared/rate-limiter.ts          ← Nouveau (rate limiting)
+/supabase/functions/_shared/anti-scraping.ts         ← Nouveau (anti-scraping)
+
+## FRONTEND (2 fichiers)
+/src/lib/supabase.ts                 ← Nouveau (client Supabase)
+/src/lib/api.ts                      ← Nouveau (API wrappers)
+
+## DOCUMENTATION (9 fichiers)
+/README.md                           ← Nouveau (doc principale)
+/QUICKSTART.md                       ← Nouveau (démarrage 5 min)
+/BUILD_VERIFICATION.md               ← Nouveau (debug build)
+/DEPLOYMENT_GUIDE.md                 ← Nouveau (guide complet)
+/SECURITY_ARCHITECTURE.md            ← Nouveau (architecture)
+/CLOUDFLARE_WAF_CONFIG.md            ← Nouveau (config WAF)
+/SECURITY_CHECKLIST.md               ← Nouveau (checklist)
+/CHANGES_SUMMARY.md                  ← Nouveau (résumé changements)
+/DEPLOY_NOW.md                       ← Nouveau (déploiement immédiat)
+/FILES_TO_COMMIT.txt                 ← Ce fichier
+
+## MODIFIÉ (1 fichier)
+/package.json                        ← Modifié (@supabase/supabase-js ajouté)
+
+---
+
+TOTAL: 17 fichiers (16 nouveaux + 1 modifié)
+POIDS: ~200 KB (tout en texte, aucun binaire)
+BUILD: ✅ Vercel ready (aucun figma:asset)
+
+---
+
+COMMANDE:
+git add .
+git commit -m "Add production security architecture + Vercel build ready"
+git push origin main

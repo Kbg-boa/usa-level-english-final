@@ -1,0 +1,58 @@
+=============================================================
+COMMIT SUPABASE - LISTE RAPIDE
+=============================================================
+
+FICHIERS CRÉÉS (3):
+------------------------------------------------------------
+✅ /scripts/import-vocabulary.ts
+✅ /SUPABASE_SETUP_GUIDE.md
+✅ /FRONTEND_MIGRATION_GUIDE.md
+✅ /SUPABASE_FILES_SUMMARY.md (ce fichier)
+
+FICHIERS MODIFIÉS (1):
+------------------------------------------------------------
+✅ /package.json (ajout tsx + dotenv)
+
+VÉRIFICATIONS:
+------------------------------------------------------------
+✅ Aucun import figma:asset
+✅ index.html → /src/main.tsx
+✅ Build Vercel OK
+
+MESSAGE DE COMMIT:
+------------------------------------------------------------
+Add Supabase setup scripts and migration guides
+
+- Add import script for 9000 vocabulary words
+- Add complete Supabase setup guide (1h setup)
+- Add frontend migration guide (async API)
+- Install tsx + dotenv for script execution
+- Prepare Level 3 security (backend protection)
+
+COMMANDE GIT:
+------------------------------------------------------------
+git add .
+git commit -m "Add Supabase setup scripts and migration guides"
+git push origin main
+
+APRÈS LE PUSH:
+------------------------------------------------------------
+1. Vercel auto-déploie (2-3 min)
+2. Site en ligne (inchangé - données statiques encore)
+3. Supabase setup à faire plus tard (voir guides)
+
+NOTES IMPORTANTES:
+------------------------------------------------------------
+- L'app fonctionne SANS Supabase configuré (données statiques)
+- Supabase = optionnel mais fortement recommandé (sécurité)
+- Setup Supabase = ~1h (guides fournis)
+- Ne PAS commit .env (déjà dans .gitignore)
+
+TEMPS:
+------------------------------------------------------------
+Push: 2 minutes
+Build Vercel: 2-3 minutes
+
+=============================================================
+PRÊT À PUSH ! 🚀
+=============================================================
