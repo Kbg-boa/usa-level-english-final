@@ -1,0 +1,6 @@
+#version: 2
+updates:
+  - package-ecosystem: "npm" # Pour les scripts Node.js/Figma plugins
+    directory: "/"
+    schedule:
+      interval: "daily" # Plus fréquent pour être réactif
