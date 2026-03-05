@@ -29,7 +29,7 @@ import IconGenerator from "./components/IconGenerator";
 
 // Admin imports
 import { AdminLogin } from "./admin/Login";
-import { AdminLayout } from "./admin/AdminLayout";
+import { ProtectedAdminLayout } from "./admin/ProtectedAdminLayout";
 import { Dashboard as AdminDashboard } from "./admin/Dashboard";
 import { Users } from "./admin/Users";
 import { Analytics } from "./admin/Analytics";
@@ -80,7 +80,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    Component: AdminLayout,
+    Component: ProtectedAdminLayout,
     children: [
       { index: true, Component: AdminDashboard },
       { path: "dashboard", Component: AdminDashboard },

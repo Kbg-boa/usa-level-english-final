@@ -84,9 +84,10 @@ export function AdminLogin() {
         throw new Error('Account is blocked');
       }
 
-      if (!['admin', 'super_admin'].includes(userData.role)) {
+      // CRITICAL: Only super_admin role allowed
+      if (userData.role !== 'super_admin') {
         await supabase.auth.signOut();
-        throw new Error('Access denied - Admin privileges required');
+        throw new Error('Access denied - Super Admin privileges required');
       }
 
       // Update last login
@@ -227,12 +228,22 @@ export function AdminLogin() {
           <div className="mt-6 pt-6 border-t border-gray-200">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-sm text-blue-800 font-medium mb-1">
-                🔒 Admin Access Only
+                🔒 Super Admin Access Only
               </p>
               <p className="text-xs text-blue-600">
-                Only authorized administrators can access this panel. All login attempts are logged.
+                Only users with Super Admin role can access this panel. All login attempts are logged and monitored.
               </p>
             </div>
+            {!SUPABASE_URL && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-3">
+                <p className="text-sm text-yellow-800 font-medium mb-1">
+                  ⚠️ DEV MODE
+                </p>
+                <p className="text-xs text-yellow-600">
+                  Supabase not configured - Any credentials accepted for testing. Production requires super_admin role.
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
