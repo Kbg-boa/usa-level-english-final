@@ -5,9 +5,12 @@ import { Shield, Mail, Lock, AlertCircle, Loader, XCircle } from 'lucide-react';
 // Environment detection
 const IS_DEV = import.meta.env.DEV;
 const IS_PROD = import.meta.env.PROD;
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_PROJECT_ID 
-  ? `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co`
-  : null;
+const SUPABASE_URL =
+  import.meta.env.VITE_SUPABASE_URL ||
+  (import.meta.env.VITE_SUPABASE_PROJECT_ID
+    ? `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co`
+    : null);
+
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || null;
 
 export function AdminLogin() {
