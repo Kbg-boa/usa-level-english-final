@@ -91,4 +91,10 @@ export const router = createBrowserRouter([
       { path: "content", Component: Content },
     ],
   },
-]);
+]); import { ResetPassword } from './auth/ResetPassword';
+
+// ...
+{
+  path: '/auth/reset-password',
+  element: <ResetPassword />,
+},
