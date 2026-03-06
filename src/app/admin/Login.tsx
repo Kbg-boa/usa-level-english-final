@@ -129,11 +129,13 @@ export function AdminLogin() {
       }
 
       if (!userData) {
-        await supabase.auth.signOut();
-        throw new Error(
-          'User not found in users_extended. Check RLS policy or verify this user exists in public.users_extended.'
-        );
-      }
+  console.error('Auth user id:', authData.user.id);
+  console.error('Auth email:', authData.user.email);
+  await supabase.auth.signOut();
+  throw new Error(
+    `User not found in users_extended. auth.id=${authData.user.id} auth.email=${authData.user.email}`
+  );
+}
 
       console.log('✅ User found in database:', userData.email);
       console.log('🛡️ Role:', userData.role);
