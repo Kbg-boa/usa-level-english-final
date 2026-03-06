@@ -1,22 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Shield, Mail, Lock, AlertCircle, Loader, XCircle } from 'lucide-react';
+import { trackSecurityEvent } from '../../lib/analytics';
 
 // Environment detection
 const IS_DEV = import.meta.env.DEV;
 const IS_PROD = import.meta.env.PROD;
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || null;
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_PROJECT_ID 
+  ? `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co`
+  : null;
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || null;
-
-type AdminUser = {
-  id: string;
-  email: string;
-  full_name?: string | null;
-  role: string;
-  is_active: boolean;
-  is_blocked: boolean;
-  login_count?: number | null;
-};
 
 export function AdminLogin() {
   const navigate = useNavigate();
@@ -27,10 +20,9 @@ export function AdminLogin() {
   const [configError, setConfigError] = useState<string | null>(null);
 
   useEffect(() => {
+    // PRODUCTION: Block if Supabase not configured
     if (IS_PROD && (!SUPABASE_URL || !SUPABASE_KEY)) {
-      setConfigError(
-        'Admin panel is not configured. Supabase environment variables are required in production.'
-      );
+      setConfigError('Admin panel is not configured. Supabase environment variables are required in production.');
     }
   }, []);
 
@@ -40,40 +32,41 @@ export function AdminLogin() {
     setLoading(true);
 
     try {
+      // PRODUCTION: Block completely if Supabase not configured
       if (IS_PROD && (!SUPABASE_URL || !SUPABASE_KEY)) {
         throw new Error('Admin panel is not configured. Contact system administrator.');
       }
 
-      // DEV MODE only if running locally without Supabase config
+      // DEV MODE: Mock login (only in local development)
       if (IS_DEV && (!SUPABASE_URL || !SUPABASE_KEY)) {
         console.log('🔓 DEV MODE: Supabase not configured - Mock login enabled');
-
-        if (!email || !password) {
+        
+        if (email && password) {
+          // Simulate API delay
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+          // Store mock session
+          localStorage.setItem('admin_session', JSON.stringify({
+            user: { email, role: 'super_admin', full_name: 'Dev Admin' },
+            timestamp: Date.now()
+          }));
+          
+          console.log('✅ DEV MODE: Mock login successful');
+          navigate('/admin/dashboard');
+          return;
+        } else {
           throw new Error('Please enter email and password');
         }
-
-        await new Promise((resolve) => setTimeout(resolve, 800));
-
-        localStorage.setItem(
-          'admin_session',
-          JSON.stringify({
-            user: { email, role: 'super_admin', full_name: 'Dev Admin' },
-            timestamp: Date.now(),
-          })
-        );
-
-        console.log('✅ DEV MODE: Mock login successful');
-        navigate('/admin/dashboard');
-        return;
       }
 
+      // PRODUCTION MODE: Real Supabase auth with strict validation
       if (!SUPABASE_URL || !SUPABASE_KEY) {
         throw new Error('Supabase configuration missing');
       }
 
       const { createClient } = await import('@supabase/supabase-js');
       const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
+      
       // Step 1: Sign in with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
@@ -88,105 +81,62 @@ export function AdminLogin() {
         throw new Error('Login failed - no user returned');
       }
 
-      console.log('🔐 Supabase auth successful');
-      console.log('👤 Auth user id:', authData.user.id);
-      console.log('📧 Auth email:', authData.user.email);
+      console.log('🔐 Supabase auth successful, checking permissions...');
 
-      // Step 2: Fetch user details from users_extended by id
-      let userData: AdminUser | null = null;
-
-      const { data: userById, error: userByIdError } = await supabase
+      // Step 2: Fetch user details from users_extended
+      const { data: userData, error: userError } = await supabase
         .from('users_extended')
-        .select('id, email, full_name, role, is_active, is_blocked, login_count')
+        .select('id, email, full_name, role, is_active, is_blocked')
         .eq('id', authData.user.id)
         .single();
 
-      if (userByIdError) {
-        console.error('❌ users_extended lookup by id failed:', userByIdError);
+      if (userError || !userData) {
+        await supabase.auth.signOut();
+        throw new Error('User not found in database');
       }
 
-      if (userById) {
-        userData = userById as AdminUser;
-      }
+      console.log('👤 User found:', userData.email, '| Role:', userData.role);
 
-      // Fallback lookup by email if id lookup fails
-      if (!userData) {
-        console.log('🔎 Fallback: looking up users_extended by email...');
-
-        const { data: userByEmail, error: userByEmailError } = await supabase
-          .from('users_extended')
-          .select('id, email, full_name, role, is_active, is_blocked, login_count')
-          .eq('email', authData.user.email)
-          .single();
-
-        if (userByEmailError) {
-          console.error('❌ users_extended lookup by email failed:', userByEmailError);
-        }
-
-        if (userByEmail) {
-          userData = userByEmail as AdminUser;
-        }
-      }
-
-      if (!userData) {
-  console.error('Auth user id:', authData.user.id);
-  console.error('Auth email:', authData.user.email);
-  await supabase.auth.signOut();
-  throw new Error(
-    `User not found in users_extended. auth.id=${authData.user.id} auth.email=${authData.user.email}`
-  );
-}
-
-      console.log('✅ User found in database:', userData.email);
-      console.log('🛡️ Role:', userData.role);
-      console.log('🟢 Active:', userData.is_active);
-      console.log('⛔ Blocked:', userData.is_blocked);
-
-      // Step 3: Role check
+      // Step 3: CRITICAL - Check role is super_admin
       if (userData.role !== 'super_admin') {
-        console.error(
-          '🚫 [SECURITY] Unauthorized role:',
-          userData.role,
-          '| required: super_admin'
-        );
+        console.error('🚫 [SECURITY] Unauthorized access attempt - Role:', userData.role, '| Required: super_admin');
         await supabase.auth.signOut();
         throw new Error('Access denied - Super Admin privileges required');
       }
 
-      // Step 4: Active check
+      // Step 4: Check account is active
       if (!userData.is_active) {
         console.error('🚫 [SECURITY] Account not active:', userData.email);
         await supabase.auth.signOut();
         throw new Error('Account is not active');
       }
 
-      // Step 5: Blocked check
+      // Step 5: Check account is not blocked
       if (userData.is_blocked) {
         console.error('🚫 [SECURITY] Account blocked:', userData.email);
         await supabase.auth.signOut();
         throw new Error('Account is blocked');
       }
 
-      // Step 6: Update last login (do not fail login if this update fails)
-      try {
-        await supabase
-          .from('users_extended')
-          .update({
-            last_login_at: new Date().toISOString(),
-            login_count: (userData.login_count ?? 0) + 1,
-          })
-          .eq('id', userData.id);
-      } catch (updateErr) {
-        console.warn('⚠️ Could not update last_login_at/login_count:', updateErr);
-      }
+      console.log('✅ All security checks passed');
 
+      // Step 6: Update last login
+      await supabase
+        .from('users_extended')
+        .update({
+          last_login_at: new Date().toISOString(),
+          login_count: (userData as any).login_count + 1 || 1,
+        })
+        .eq('id', authData.user.id);
+
+      // Success - redirect to dashboard
       console.log('🎉 Login successful, redirecting to dashboard');
       navigate('/admin/dashboard');
     } catch (err: any) {
       console.error('❌ Login error:', err);
-      setError(err?.message || 'Login failed');
+      setError(err.message || 'Login failed');
 
-      // Optional security log
+      // Log failed login attempt (security audit)
       if (SUPABASE_URL && IS_PROD) {
         try {
           await fetch(
@@ -198,11 +148,11 @@ export function AdminLogin() {
               },
               body: JSON.stringify({
                 email,
-                error: err?.message || 'Login failed',
+                error: err.message,
                 timestamp: new Date().toISOString(),
               }),
             }
-          ).catch(() => {});
+          ).catch(() => {}); // Ignore errors in logging
         } catch {}
       }
     } finally {
@@ -210,17 +160,15 @@ export function AdminLogin() {
     }
   };
 
+  // PRODUCTION: Show config error if Supabase not configured
   if (configError) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-red-900 to-gray-900 flex items-center justify-center p-4">
         <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
-              backgroundSize: '40px 40px',
-            }}
-          />
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
+            backgroundSize: '40px 40px'
+          }}></div>
         </div>
 
         <div className="relative w-full max-w-md">
@@ -231,13 +179,13 @@ export function AdminLogin() {
               </div>
               <h1 className="text-2xl font-bold text-gray-900 mb-2">Configuration Required</h1>
               <p className="text-gray-600 mb-6">{configError}</p>
-
+              
               <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-left">
                 <p className="text-sm font-medium text-red-800 mb-2">
                   🔒 Missing Environment Variables
                 </p>
                 <ul className="text-xs text-red-600 space-y-1">
-                  <li>• VITE_SUPABASE_URL</li>
+                  <li>• VITE_SUPABASE_PROJECT_ID</li>
                   <li>• VITE_SUPABASE_ANON_KEY</li>
                 </ul>
               </div>
@@ -256,17 +204,17 @@ export function AdminLogin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center p-4">
+      {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
-            backgroundSize: '40px 40px',
-          }}
-        />
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
+          backgroundSize: '40px 40px'
+        }}></div>
       </div>
 
+      {/* Login Card */}
       <div className="relative w-full max-w-md">
+        {/* Logo & Title */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-600 rounded-2xl mb-4 shadow-xl">
             <Shield className="w-10 h-10 text-white" />
@@ -275,8 +223,11 @@ export function AdminLogin() {
           <p className="text-blue-200 text-lg">Admin Dashboard</p>
         </div>
 
+        {/* Login Form */}
         <div className="bg-white rounded-2xl shadow-2xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Admin Login</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            Admin Login
+          </h2>
 
           {error && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
@@ -289,8 +240,11 @@ export function AdminLogin() {
           )}
 
           <form onSubmit={handleLogin} className="space-y-6">
+            {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
@@ -305,8 +259,11 @@ export function AdminLogin() {
               </div>
             </div>
 
+            {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
@@ -321,6 +278,7 @@ export function AdminLogin() {
               </div>
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -340,17 +298,21 @@ export function AdminLogin() {
             </button>
           </form>
 
+          {/* Info */}
           <div className="mt-6 pt-6 border-t border-gray-200">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-sm text-blue-800 font-medium mb-1">🔒 Super Admin Access Only</p>
+              <p className="text-sm text-blue-800 font-medium mb-1">
+                🔒 Super Admin Access Only
+              </p>
               <p className="text-xs text-blue-600">
                 Only verified users with Super Admin role can access this panel. All login attempts are logged and monitored.
               </p>
             </div>
-
             {IS_DEV && (!SUPABASE_URL || !SUPABASE_KEY) && (
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-3">
-                <p className="text-sm text-yellow-800 font-medium mb-1">⚠️ DEV MODE ACTIVE</p>
+                <p className="text-sm text-yellow-800 font-medium mb-1">
+                  ⚠️ DEV MODE ACTIVE
+                </p>
                 <p className="text-xs text-yellow-600">
                   Running in development mode - Any credentials accepted for testing. Production requires Supabase authentication with super_admin role.
                 </p>
@@ -359,8 +321,11 @@ export function AdminLogin() {
           </div>
         </div>
 
+        {/* Footer */}
         <div className="mt-8 text-center">
-          <p className="text-sm text-blue-200">Protected by enterprise-grade security</p>
+          <p className="text-sm text-blue-200">
+            Protected by enterprise-grade security
+          </p>
         </div>
       </div>
     </div>

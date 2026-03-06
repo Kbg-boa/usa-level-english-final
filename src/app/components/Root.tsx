@@ -1,7 +1,16 @@
-import { Outlet, NavLink } from "react-router";
+import { Outlet, NavLink, useLocation } from "react-router";
 import { Brain, Flame, User, Target, Headphones, Book, Briefcase } from "lucide-react";
+import { useEffect } from "react";
+import { trackPageView } from "../../lib/analytics";
 
 export default function Root() {
+  const location = useLocation();
+
+  // Track page views on route changes
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location.pathname]);
+
   const navItems = [
     { to: "/", icon: Brain, label: "Dashboard", end: true },
     { to: "/fluency", icon: Flame, label: "Fluency" },
