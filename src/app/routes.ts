@@ -37,6 +37,9 @@ import { Security } from "./admin/Security";
 import { Messages } from "./admin/Messages";
 import { Content } from "./admin/Content";
 
+// Auth imports
+import { ResetPassword } from "./auth/ResetPassword";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -73,6 +76,10 @@ export const router = createBrowserRouter([
     path: "/icon-generator",
     Component: IconGenerator,
   },
+  {
+    path: "/auth/reset-password",
+    Component: ResetPassword,
+  },
   // Admin routes
   {
     path: "/admin/login",
@@ -91,10 +98,4 @@ export const router = createBrowserRouter([
       { path: "content", Component: Content },
     ],
   },
-]); import { ResetPassword } from './auth/ResetPassword';
-
-// ...
-{
-  path: '/auth/reset-password',
-  element: <ResetPassword />,
-},
+]);
