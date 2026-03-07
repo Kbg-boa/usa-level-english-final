@@ -1,0 +1,28 @@
+name: A.E.O.N. Security Watch
+on:
+  # Se déclenche dès qu'une faille de sécurité est détectée
+  repository_vulnerability_alert:
+    types: [create]
+  # Permet de tester manuellement la connexion
+  workflow_dispatch: 
+
+jobs:
+  alert_terminal:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Signal to JARVIS
+        run: |
+          curl -X POST ${{ secrets.MAKE_WEBHOOK_URL }} \
+          -H "Content-Type: application/json" \
+          -d '{
+            "command": "SECURITY_ALERT",
+            "message": "⚠️ INTRUSION DÉTECTÉE : Faille critique dans le noyau GitHub !",
+            "source": "GITHUB_SECURITY_VULN",
+            "actions": [
+              {
+                "type": "animate-core",
+                "target": "AEON_SYSTEM_POWER",
+                "payload": { "color": "red", "pulse": "fast" }
+              }
+            ]
+          }'
