@@ -11,3 +11,4 @@ jobs:
           curl -X POST "${{ secrets.MAKE_WEBHOOK_URL }}" \
           -H "Content-Type: application/json" \
           -d '{"command": "PING", "status": "ONLINE"}'
+ 
